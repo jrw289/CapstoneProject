@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Plots</title>
+        {{ resources }}
+        {{ script }}
+        <style>
+            .embed-wrapper {
+                display: flex;
+                justify-content: space-evenly;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="embed-wrapper">
+            {% for key in div.keys() %}
+                {{ div[key] }}
+            {% endfor %}
+        </div>
+<h4><div align="center">
+    Recommended other companies to explore !:
+</div></h4>
+
+     <ul style="list-style:none">
+      {% for name in options %}
+      <li align='center'  > {{ name }}  </li>
+      {% endfor %}
+      </ul>
+
+    </body>
+</html>

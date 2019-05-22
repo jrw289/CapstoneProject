@@ -1,0 +1,121 @@
+<!doctype html>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+<title>Grantly</title>
+
+<div class=page>
+	<h1><div align="left">Grantly</h1>
+   
+	<h4><div align="center">
+	<br>
+	Enter the name of any company that has received US grant money since 2004.
+	<br>A historical view of the company's grant money and patents will appear.
+	<br>A list of other companies working on similar topics will also appear. 
+	</div></h4>
+
+	<form id='comp_form' method='get' action='charts' ><div align="center"> <!-- action is the URL you want to move to next-->
+	<p>Company Name: <input type='text' name='comp_name' id='ajax' list="comp_list" placeholder='e.g. Gaia Medical Institute LLC'/></p>
+	<datalist id="comp_list"></datalist>
+	<p><input type='Submit' value='Submit' /> <!-- value is the text that will appear on the button. --></p>
+	</div></form>
+
+	<script>
+	var dataList_a = document.getElementById('comp_list');
+	var input_a = document.getElementById('ajax');
+	
+	// Create a new XMLHttpRequest.
+	var request_a = new XMLHttpRequest();
+	
+	// Handle state changes for the request.
+	request_a.onreadystatechange = function(response) {
+		if (request_a.readyState === 4) {
+			if (request_a.status === 200) {
+				// Parse the JSON
+				var jsonOptions_a = JSON.parse(request_a.responseText);
+					// Loop over the JSON array.
+				console.log(jsonOptions_a)
+				jsonOptions_a.forEach(function(item) {
+								// Create a new <option> element.
+								var option = document.createElement('option');
+								// Set the value using the item in the JSON array.
+								option.value = item;
+								// Add the <option> element to the <datalist>.
+								dataList_a.appendChild(option);
+										});
+
+		// Update the placeholder text.
+     input_a.placeholder = 'e.g. Gaia Medical Institute LLC';
+										} else {
+												// An error occured :(
+												input_a.placeholder = "Couldn't load datalist options :(";
+												}
+									  }
+													};
+
+	// Update the placeholder text.
+	input_a.placeholder = "Loading companies...";
+
+	// Set up and make the request.
+	request_a.open('GET', '/static/comp_list.json', true);
+	request_a.send();
+	</script>	
+
+	
+	
+	<h4><div align="center">
+	<br>Alternatively, a topic can be entered to display all companies working on related projects.<br>
+	</div></h4>
+
+	<form id='topic_form' method='get' action='topics' ><div align="center"> <!-- action is the URL you want to move to next-->
+	<p>Topic: <input type='text' name='topic_name' id='ajax_2' list='all_terms' placeholder = "e.g. quantum computing"/></p><datalist id="all_terms"></datalist>
+	<p><input type='Submit' value='Submit'/> <!-- value is the text that will appear on the button. --></p>
+	</div></form>
+
+		<script>
+	var dataList = document.getElementById('all_terms');
+	var input = document.getElementById('ajax_2');
+	
+	// Create a new XMLHttpRequest.
+	var request = new XMLHttpRequest();
+	
+	// Handle state changes for the request.
+	request.onreadystatechange = function(response) {
+		if (request.readyState === 4) {
+			if (request.status === 200) {
+				// Parse the JSON
+				var jsonOptions = JSON.parse(request.responseText);
+					// Loop over the JSON array.
+				jsonOptions.forEach(function(item) {
+								// Create a new <option> element.
+								var option = document.createElement('option');
+								// Set the value using the item in the JSON array.
+								option.value = item;
+								// Add the <option> element to the <datalist>.
+								dataList.appendChild(option);
+										});
+
+		// Update the placeholder text.
+     input.placeholder = 'e.g. quantum computing';
+										} else {
+												// An error occured :(
+												input.placeholder = "Couldn't load datalist options :(";
+												}
+									  }
+													};
+
+	// Update the placeholder text.
+	input.placeholder = "Loading topics...";
+
+	// Set up and make the request.
+	request.open('GET', '/static/all_terms.json', true);
+	request.send();
+	</script>	
+
+
+	
+	
+	<div><img src="/static/logo-frfull.png" alt='fr' style="width:30%" align='right'></div>
+	<div><img src="/static/uspto-logo.jpg" alt='uspto' style="width:10%" align='left'></div>
+
+</div>
